@@ -791,7 +791,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </style>
 </head>
 <body>
-    <div class="mesh-vault"></div>
+    <div class="mesh-v    # Initialize git
+    git init
+    git add .
+    git commit -m "Initial commit"
+    
+    # Push to GitHub
+    git remote add origin https://github.com/YOUR_USERNAME/amira-al-dahab.git
+    git branch -M main
+    git push -u origin main
+    
+    # Make future updates
+    git add .
+    git commit -m "Your message"
+    git pushult"></div>
 
     <!-- 1. IDENTITY GATEWAY (The First Thing Seen) -->
     <div id="authOverlay" class="fixed inset-0 z-[1000] bg-black/95 backdrop-blur-3xl flex items-center justify-center p-4 <?php echo (isLoggedIn() || isGuest()) ? 'hidden' : ''; ?>">
