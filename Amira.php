@@ -797,7 +797,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     git commit -m "Initial commit"
     
     # Push to GitHub
-    git remote add origin https://github.com/YOUR_USERNAME/amira-al-dahab.git
+    git remote add origin https://github.com/marklius240-stack/amira-al-dahab.git
     git branch -M main
     git push -u origin main
     
