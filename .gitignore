@@ -1,0 +1,32 @@
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Environment configuration
+.env
+.env.local
+.env.*.local
+
+# Sensitive files
+audit.log
+amira-background.jpg
+
+# OS files
+.DS_Store
+Thumbs.db
+.vscode/settings.json
+
+# Temporary files
+*.tmp
+*.log
+*.swp
+*.swo
+*~
+
+# Node modules (if used for build tools)
+node_modules/
+package-lock.json
+
+# PHP related
+.php_cs.cache
