@@ -3,12 +3,31 @@
  * AMIRA AL DAHAB - APEX EDITION (2026)
  * The definitive fusion of Security, Currency, and Social Proof.
  */
-session_set_cookie_params([
-    'httponly' => true,
-    'secure' => (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off'),
-    'samesite' => 'Strict',
-]);
+
+// Session configuration - Vercel compatible
+$isVercel = getenv('VERCEL') === '1' || getenv('VERCEL_ENV') !== false;
+if ($isVercel) {
+    // Use cookie-based sessions for Vercel
+    ini_set('session.save_handler', 'files');
+    ini_set('session.save_path', '/tmp');
+    session_set_cookie_params([
+        'httponly' => true,
+        'secure' => true,
+        'samesite' => 'Strict',
+        'lifetime' => 3600 // 1 hour
+    ]);
+} else {
+    // Standard session config for local development
+    session_set_cookie_params([
+        'httponly' => true,
+        'secure' => (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off'),
+        'samesite' => 'Strict',
+    ]);
+}
+
 session_start();
+
+// Initialize CSRF token if not exists
 if (!isset($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
@@ -21,16 +40,18 @@ header("Permissions-Policy: geolocation=(), microphone=(), camera=()");
 header("Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://cdn.tailwindcss.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://fonts.googleapis.com; img-src 'self' data:; font-src 'self' https://fonts.gstatic.com; connect-src 'self'; frame-ancestors 'none'; base-uri 'self';");
 date_default_timezone_set('UTC');
 
-// Database setup
-$dbFile = __DIR__ . '/amira.db';
-try {
+// Database setup - Vercel compatible
+$isVercel = getenv('VERCEL') === '1' || getenv('VERCEL_ENV') !== false;
+if ($isVercel) {
+    // Use in-memory database for Vercel (demo mode)
+    $db = new PDO('sqlite::memory:');
+} else {
+    // Use file-based database for local development
+    $dbFile = __DIR__ . '/amira.db';
     $db = new PDO("sqlite:$dbFile");
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-} catch (PDOException $e) {
-    http_response_code(500);
-    die('Database error.');
 }
+$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+$db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
 function tableHasColumn($table, $column) {
     global $db;
@@ -143,15 +164,16 @@ function antiTimingAttack() {
 
 // Secure audit logging (no sensitive data)
 function auditLog($action, $userId = null, $details = []) {
-    $logFile = __DIR__ . '/audit.log';
+    $isVercel = getenv('VERCEL') === '1' || getenv('VERCEL_ENV') !== false;
+    $logFile = $isVercel ? '/tmp/audit.log' : __DIR__ . '/audit.log';
     $entry = [
         'timestamp' => date('Y-m-d H:i:s'),
         'action' => $action,
         'user_id' => $userId,
-        'ip' => hash('sha256', $_SERVER['REMOTE_ADDR']), // Hash IP
+        'ip' => hash('sha256', $_SERVER['REMOTE_ADDR'] ?? 'unknown'),
         'details' => $details
     ];
-    file_put_contents($logFile, json_encode($entry) . "\n", FILE_APPEND);
+    @file_put_contents($logFile, json_encode($entry) . "\n", FILE_APPEND | LOCK_EX);
 }
 
 // IP validation and logging
@@ -514,7 +536,7 @@ function renderGatewayPage() {
     <title>Secure Payment Checkout</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="min-h-screen text-white font-sans" style="background: linear-gradient(135deg, rgba(0,0,0,0.85) 0%, rgba(20,10,5,0.9) 50%, rgba(0,0,0,0.85) 100%), url('amira-background.jpg') center/cover fixed no-repeat;">
+<body class="min-h-screen text-white font-sans" style="background: linear-gradient(135deg, rgba(0,0,0,0.85) 0%, rgba(20,10,5,0.9) 50%, rgba(0,0,0,0.85) 100%), url('Amira%20pics.JPG') center/cover fixed no-repeat;">
     <div class="max-w-4xl mx-auto p-8">
         <div class="bg-neutral-900 border border-yellow-500 rounded-3xl p-8 space-y-6">
             <h1 class="text-4xl font-black text-yellow-400">Secure Payment Checkout</h1>
@@ -766,7 +788,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&display=swap');
         body { 
-            background: linear-gradient(135deg, rgba(0,0,0,0.85) 0%, rgba(20,10,5,0.9) 50%, rgba(0,0,0,0.85) 100%), url('amira-background.jpg') center/cover fixed no-repeat;
+            background: linear-gradient(135deg, rgba(0,0,0,0.85) 0%, rgba(20,10,5,0.9) 50%, rgba(0,0,0,0.85) 100%), url('Amira%20pics.JPG') center/cover fixed no-repeat;
             color: #fff; 
             font-family: 'Space Grotesk', sans-serif; 
             overflow-x: hidden;
@@ -791,20 +813,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </style>
 </head>
 <body>
-    <div class="mesh-v    # Initialize git
-    git init
-    git add .
-    git commit -m "Initial commit"
-    
-    # Push to GitHub
-    git remote add origin https://github.com/marklius240-stack/amira-al-dahab.git
-    git branch -M main
-    git push -u origin main
-    
-    # Make future updates
-    git add .
-    git commit -m "Your message"
-    git pushult"></div>
+    <div class="mesh-v"></div>
 
     <!-- 1. IDENTITY GATEWAY (The First Thing Seen) -->
     <div id="authOverlay" class="fixed inset-0 z-[1000] bg-black/95 backdrop-blur-3xl flex items-center justify-center p-4 <?php echo (isLoggedIn() || isGuest()) ? 'hidden' : ''; ?>">

@@ -1,0 +1,12 @@
+php/
+amira.db
+amira-al-dahab/
+.git/
+node_modules/
+*.log
+*.tmp
+*.db
+*.sqlite
+*.sqlite3
+.env
+.env.*

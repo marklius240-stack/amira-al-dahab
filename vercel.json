@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "index.php",
+      "use": "@vercel/php"
+    }
+  ],
+  "env": {
+    "PAYMENT_VERIFICATION_MODE": "mock"
+  }
+}
