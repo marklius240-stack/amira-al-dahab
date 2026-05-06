@@ -1,10 +1,16 @@
 {
-  "version": 2,
+  "version": 3,
   "functions": {
     "index.php": {
       "runtime": "vercel-php@0.6.0"
     }
   },
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/index.php"
+    }
+  ],
   "env": {
     "PAYMENT_VERIFICATION_MODE": "mock"
   }

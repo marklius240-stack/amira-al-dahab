@@ -55,6 +55,10 @@ $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
 function tableHasColumn($table, $column) {
     global $db;
+    $table = preg_replace('/[^A-Za-z0-9_]/', '', $table);
+    if (!$table) {
+        return false;
+    }
     $stmt = $db->prepare("PRAGMA table_info($table)");
     $stmt->execute();
     foreach ($stmt->fetchAll() as $columnInfo) {
@@ -378,8 +382,6 @@ function verifyBTCPayment($txHash, $amount, $currency, $wallet, &$error) {
     }
 
     auditLog('btc_payment_verified', $_SESSION['user_id'] ?? null, ['amount' => $received]);
-    return true;
-    // In production, convert BTC to USD and check exact amount
     return true;
 }
 
