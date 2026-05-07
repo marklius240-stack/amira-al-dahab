@@ -538,7 +538,7 @@ function renderGatewayPage() {
     <title>Secure Payment Checkout</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="min-h-screen text-white font-sans" style="background: linear-gradient(135deg, rgba(0,0,0,0.85) 0%, rgba(20,10,5,0.9) 50%, rgba(0,0,0,0.85) 100%), url('Amira%20pics.JPG') center/cover fixed no-repeat;">
+<body class="min-h-screen text-white font-sans" style="background: linear-gradient(135deg, rgba(0,0,0,0.85) 0%, rgba(20,10,5,0.9) 50%, rgba(0,0,0,0.85) 100%), url('amira-background.jpg') center/cover fixed no-repeat;">
     <div class="max-w-4xl mx-auto p-8">
         <div class="bg-neutral-900 border border-yellow-500 rounded-3xl p-8 space-y-6">
             <h1 class="text-4xl font-black text-yellow-400">Secure Payment Checkout</h1>
@@ -790,7 +790,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&display=swap');
         body { 
-            background: linear-gradient(135deg, rgba(0,0,0,0.85) 0%, rgba(20,10,5,0.9) 50%, rgba(0,0,0,0.85) 100%), url('Amira%20pics.JPG') center/cover fixed no-repeat;
+            background: linear-gradient(135deg, rgba(0,0,0,0.85) 0%, rgba(20,10,5,0.9) 50%, rgba(0,0,0,0.85) 100%), url('amira-background.jpg') center/cover fixed no-repeat;
             color: #fff; 
             font-family: 'Space Grotesk', sans-serif; 
             overflow-x: hidden;
